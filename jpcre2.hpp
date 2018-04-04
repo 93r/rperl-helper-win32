@@ -139,9 +139,9 @@ typedef uint8_t Ush;                                ///< 8 bit unsigned integer.
 typedef std::vector<SIZE_T> VecOff;                 ///< vector of size_t.
 typedef std::vector<Uint> VecOpt;                   ///< vector for Uint option values.
 
-/// @namespace jpcre2::ERROR
+/// @namespace jpcre2::error
 /// Namespace for error codes.
-namespace ERROR {
+namespace error {
     /** Error numbers for JPCRE2.
      *  JPCRE2 error numbers are positive integers while
      *  PCRE2 error numbers are negative integers.
@@ -757,7 +757,7 @@ namespace MOD {
             }
             
             //Modifier didn't match, invalid modifier
-            *en = (int)ERROR::INVALID_MODIFIER;
+            *en = (int)error::INVALID_MODIFIER;
             *eo = (int)mod[i];
             
             endfor:;
@@ -1454,9 +1454,9 @@ struct select{
     ///@param err_off error offset
     ///@return message as jpcre2::select::String.
     static String getErrorMessage(int err_num, int err_off)  {
-        if(err_num == (int)ERROR::INVALID_MODIFIER){
+        if(err_num == (int)error::INVALID_MODIFIER){
             return MSG<Char>::INVALID_MODIFIER() + toString((Char)err_off);
-        } else if(err_num == (int)ERROR::INSUFFICIENT_OVECTOR){
+        } else if(err_num == (int)error::INSUFFICIENT_OVECTOR){
             return MSG<Char>::INSUFFICIENT_OVECTOR();
         } else if(err_num != 0) {
             return getPcre2ErrorMessage((int) err_num) + ConvInt<Char>::toString((int) err_off);
@@ -1992,7 +1992,7 @@ struct select{
         /// This function does not initialize or re-initialize options.
         /// If you want to set options from scratch, initialize them to 0 before calling this function.
         /// If invalid modifier is detected, then the error number for the RegexMatch
-        /// object will be jpcre2::ERROR::INVALID_MODIFIER and error offset will be the modifier character.
+        /// object will be jpcre2::error::INVALID_MODIFIER and error offset will be the modifier character.
         /// You can get the message with RegexMatch::getErrorMessage() function.
         ///
         /// @param mod Modifier string.
@@ -3461,7 +3461,7 @@ struct select{
         /// If you want to set options from scratch, initialize them to 0 before calling this function.
         ///
         /// If invalid modifier is detected, then the error number for the RegexReplace
-        /// object will be jpcre2::ERROR::INVALID_MODIFIER and error offset will be the modifier character.
+        /// object will be jpcre2::error::INVALID_MODIFIER and error offset will be the modifier character.
         /// You can get the message with RegexReplace::getErrorMessage() function.
         /// @param mod Modifier string.
         /// @param x Whether to add or remove option
@@ -4124,7 +4124,7 @@ struct select{
         /// If you want to set options from scratch, initialize them to 0 before calling this function.
         ///
         /// If invalid modifier is detected, then the error number for the Regex
-        /// object will be jpcre2::ERROR::INVALID_MODIFIER and error offset will be the modifier character.
+        /// object will be jpcre2::error::INVALID_MODIFIER and error offset will be the modifier character.
         /// You can get the message with Regex::getErrorMessage() function.
         /// @param mod Modifier string.
         /// @param x Whether to add or remove option
@@ -4821,7 +4821,7 @@ jpcre2::SIZE_T jpcre2::select<Char_T, BS>::RegexMatch::match() {
 
     if (rc == 0) {
         //ovector was not big enough for all the captured substrings;
-        error_number = (int)ERROR::INSUFFICIENT_OVECTOR;
+        error_number = (int)error::INSUFFICIENT_OVECTOR;
         rc = Pcre2Func<BS>::get_ovector_count(match_data);
     }
     //match succeeded at offset ovector[0]
@@ -4996,7 +4996,7 @@ jpcre2::SIZE_T jpcre2::select<Char_T, BS>::RegexMatch::match() {
         if (rc == 0) {
             /* The match succeeded, but the output vector wasn't big enough. This
              should not happen. */
-            error_number = (int)ERROR::INSUFFICIENT_OVECTOR;
+            error_number = (int)error::INSUFFICIENT_OVECTOR;
             rc = Pcre2Func<BS>::get_ovector_count(match_data);
         }
         
